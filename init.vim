@@ -67,7 +67,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 
-" Python
+"" Python
 let g:python3_host_prog = '$HOME/.config/nvim/py37/bin/python'
 Plug 'numirias/semshi', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
@@ -77,12 +77,15 @@ au FileType python nnoremap <buffer> <Tab>      :Semshi goto name next<CR>
 au FileType python nnoremap <buffer> <S-Tab>    :Semshi goto name prev<CR>
 au FileType python nnoremap <buffer> <leader>ge :Semshi goto error<CR>
 au FileType python nnoremap <buffer> <leader>e  :Semshi error<CR>
-
 """ Override default Semshi highlight to be less distracting
 function CustomSemshiHighlights()
   hi semshiSelected ctermfg=161 cterm=underline
 endfunction
 au FileType python call CustomSemshiHighlights()
+
+"" Puppet :(
+Plug 'rodjek/vim-puppet'
+Plug 'scrooloose/syntastic'
 
 call plug#end()
 
