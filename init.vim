@@ -3,6 +3,10 @@ let mapleader=" "
 nnoremap <leader>s :source ~/.config/nvim/init.vim<CR>
 set timeoutlen=2000
 
+" Auto-reload changes from disk
+set autoread
+au CursorHold * checktime
+
 " Statusline
 "" File and filetype
 set statusline=%f\ %y
