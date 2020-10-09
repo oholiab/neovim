@@ -29,10 +29,12 @@ syntax enable
 au FileType markdown setlocal textwidth=79
 au FileType markdown nnoremap <buffer> <leader>d V:s/\[ \]/[*]/<CR>
 au FileType markdown nnoremap <buffer> <leader>o o*<space>[<space>]<space>
-au FileType markdown highlight UncheckedTodo ctermbg=yellow
+au FileType markdown hi UncheckedTodo ctermbg=yellow
 au FileType markdown syn match UncheckedTodo /\[<space>\]/
-au FileType markdown highlight CheckedTodo ctermbg=green
+au FileType markdown hi CheckedTodo ctermbg=green
 au FileType markdown syn match CheckedTodo /\[\*\]/
+au FileType markdown hi TodoTitle cterm=underline
+au FileType markdown syn match TodoTitle /^TITLE: .\+$/
 
 " Keybindings
 " Window management
@@ -46,6 +48,14 @@ endfor
 "" File and buffer management
 nnoremap <leader>t :NERDTreeToggle<CR>
 nnoremap <leader>bd :bd<CR>
+
+"" Cut and paste
+let osname = system("uname")
+if osname == "Darwin"
+  vnoremap <leader>y :w ! pbcopy<CR><CR>
+elseif osname == "Linux"
+  vnoremap <leader>y :w ! wl-copy<CR><CR>
+endif
 
 " Plugins
 call plug#begin('~/.nvim/plugged')
