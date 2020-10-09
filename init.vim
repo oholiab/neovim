@@ -1,11 +1,6 @@
 set nu
 let mapleader=" "
-function Reload()
-  let &l:curft = &ft
-  source ~/.nvimrc
-  setf &l:curft
-endfunction
-nnoremap <leader>r :Reload
+nnoremap <leader>s :source ~/.config/nvim/init.vim<CR>
 set timeoutlen=2000
 
 " Statusline
@@ -48,6 +43,8 @@ endfor
 "" File and buffer management
 nnoremap <leader>t :NERDTreeToggle<CR>
 nnoremap <leader>bd :bd<CR>
+nnoremap <leader>bb :Buffers<CR>
+nnoremap <leader>bh :History<CR>
 
 "" Cut and paste
 let osname = system("uname")
@@ -62,7 +59,11 @@ call plug#begin('~/.nvim/plugged')
 cnoreabbrev PluginInstall PlugInstall
 "" Navigation
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle' }
-"" Python
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-fugitive'
+
+" Python
 let g:python3_host_prog = '$HOME/.config/nvim/py37/bin/python'
 Plug 'numirias/semshi', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
