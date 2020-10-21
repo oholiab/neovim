@@ -50,12 +50,16 @@ nnoremap <leader>bd :bd<CR>
 nnoremap <leader>bb :Buffers<CR>
 nnoremap <leader>bh :History<CR>
 
+"" Text reflow
+""" Reflow current paragraph
+nnoremap <leader>pr vipgq<CR>
+
 "" Cut and paste
-let osname = system("uname")
-if osname == "Darwin"
-  vnoremap <leader>y :w ! pbcopy<CR><CR>
-elseif osname == "Linux"
-  vnoremap <leader>y :w ! wl-copy<CR><CR>
+vnoremap <space> <Nop>
+if has("macunix")
+  vnoremap <leader>y y:call system("pbcopy", @")<CR>:echo "Copied"<CR>
+elseif has("unix")
+  vnoremap <leader>y y:call system("wl-copy", @")<CR>:echo "Copied"<CR>
 endif
 
 " Plugins
