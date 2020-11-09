@@ -7,6 +7,9 @@ set timeoutlen=2000
 set autoread
 au CursorHold * checktime
 
+" Hide buffers instead of closing them
+set hidden
+
 " Statusline
 "" File and filetype
 set statusline=%f\ %y
