@@ -89,6 +89,9 @@ au FileType python nnoremap <buffer> <leader>e  :Semshi error<CR>
 function CustomSemshiHighlights()
   hi semshiSelected ctermfg=161 cterm=underline
 endfunction
+
+"" Clojure
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 au FileType python call CustomSemshiHighlights()
 
 "" Puppet :(
