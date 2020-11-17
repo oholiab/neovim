@@ -55,6 +55,7 @@ nnoremap <leader>bd :bd<CR>
 nnoremap <leader>bb :Buffers<CR>
 nnoremap <leader>bh :History<CR>
 nnoremap <leader>bf :Files<CR>
+nnoremap <leader>ff :Files<CR>
 
 "" Text reflow
 """ Reflow current paragraph
