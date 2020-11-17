@@ -104,9 +104,12 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 au FileType python call CustomSemshiHighlights()
 
 "" Puppet :(
-Plug 'rodjek/vim-puppet'
-Plug 'scrooloose/syntastic'
+Plug 'rodjek/vim-puppet', {'for': 'puppet' }
 
+"" Golang
+Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries' }
+
+Plug 'scrooloose/syntastic'
 call plug#end()
 
 " Trailing whitespace
