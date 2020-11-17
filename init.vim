@@ -37,6 +37,8 @@ au FileType markdown hi CheckedTodo ctermbg=green
 au FileType markdown syn match CheckedTodo /\[\*\]/
 au FileType markdown hi TodoTitle cterm=underline
 au FileType markdown syn match TodoTitle /^TITLE: .\+$/
+au FileType markdown set conceallevel=2
+au FileType markdown call matchadd('Conceal', '\(https:\/\/.+\)', 10, 99, {'conceal': '()'})
 
 " Keybindings
 " Window management
@@ -65,6 +67,12 @@ if has("macunix")
 elseif has("unix")
   vnoremap <leader>y y:call system("wl-copy", @")<CR>:echo "Copied"<CR>
 endif
+
+"" Meta
+""" Display syntax features under cursor
+nnoremap <leader>h :echom "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Plugins
 call plug#begin('~/.nvim/plugged')
