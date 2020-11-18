@@ -54,8 +54,11 @@ nnoremap <leader>t :NERDTreeToggle<CR>
 nnoremap <leader>bd :bd<CR>
 nnoremap <leader>bb :Buffers<CR>
 nnoremap <leader>bh :History<CR>
-nnoremap <leader>bf :Files<CR>
-nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fh :History<CR>
+nnoremap <leader>fF :Files<CR>
+nnoremap <leader>ff :GFiles<CR>
+nnoremap <leader>fa :Rg<CR>
+nnoremap <leader><leader> <c-^>
 
 "" Text reflow
 """ Reflow current paragraph
