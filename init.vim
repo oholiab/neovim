@@ -57,8 +57,10 @@ nnoremap <leader>bh :History<CR>
 nnoremap <leader>fh :History<CR>
 nnoremap <leader>fF :Files<CR>
 nnoremap <leader>ff :GFiles<CR>
-nnoremap <leader>fa :Rg<CR>
+nnoremap <leader>fr :Rg<CR>
 nnoremap <leader><leader> <c-^>
+nnoremap <leader>ze :e $HOME/.config/nvim/init.vim<CR>
+nnoremap <leader>gb :Git blame<CR>
 
 "" Text reflow
 """ Reflow current paragraph
@@ -111,6 +113,9 @@ Plug 'rodjek/vim-puppet', {'for': 'puppet' }
 
 "" Golang
 Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries' }
+
+"" Terraform
+Plug 'hashivim/vim-terraform', {'for': 'tf'}
 
 Plug 'scrooloose/syntastic'
 call plug#end()
