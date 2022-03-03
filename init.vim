@@ -86,6 +86,7 @@ Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'easymotion/vim-easymotion'
 
 "" Python
 let g:python3_host_prog = '$HOME/.config/nvim/py37/bin/python'
