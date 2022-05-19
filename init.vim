@@ -92,7 +92,8 @@ Plug 'easymotion/vim-easymotion'
 
 "" Python
 let g:python3_host_prog = '$HOME/.config/nvim/py37/bin/python'
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': ['python', 'vim-plug'] }
+let g:python_host_prog = '$HOME/.config/nvim/py37/bin/python'
+Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 au FileType python set signcolumn=yes
 au FileType python nnoremap <buffer> <leader>r  :Semshi rename<CR>
