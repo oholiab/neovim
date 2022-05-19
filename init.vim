@@ -92,7 +92,7 @@ Plug 'easymotion/vim-easymotion'
 
 "" Python
 let g:python3_host_prog = '$HOME/.config/nvim/py37/bin/python'
-Plug 'numirias/semshi', { 'for': 'python' }
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': ['python', 'vim-plug'] }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 au FileType python set signcolumn=yes
 au FileType python nnoremap <buffer> <leader>r  :Semshi rename<CR>
@@ -104,10 +104,10 @@ au FileType python nnoremap <buffer> <leader>e  :Semshi error<CR>
 function CustomSemshiHighlights()
   hi semshiSelected ctermfg=161 cterm=underline
 endfunction
+au FileType python call CustomSemshiHighlights()
 
 "" Clojure
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-au FileType python call CustomSemshiHighlights()
 
 "" Puppet :(
 Plug 'rodjek/vim-puppet', {'for': 'puppet' }
@@ -117,6 +117,12 @@ Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries' }
 
 "" Terraform
 Plug 'hashivim/vim-terraform', {'for': 'tf'}
+
+"" XML
+augroup XML
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
 
 Plug 'scrooloose/syntastic'
 call plug#end()
