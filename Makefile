@@ -1,17 +1,26 @@
 SHELL=/bin/bash
 .ONESHELL:
 INDEX?=pypi.org
+REGISTRY?=https://registry.npmjs.org
+PYTHON?=py310
 
-.PHONY: install clean
+.PHONY: install clean npmbullshit
 default: install
 
-py37:
-	virtualenv -p python3.7 ./$@
-	source $@/bin/activate
-	pip install --index-url https://$(INDEX)/simple pynvim==0.4.3
+npmbullshit:
+	mkdir "${HOME}/.npm-packages"
+	npm config set prefix "${HOME}/.npm-packages"
+	npm config set coc.nvim:registry $(REGISTRY)
+	npm i -g vim-language-server
+	npm i -g pyright
 
-install: py37
+$(PYTHON):
+	virtualenv -p python3.10 ./$@
+	source $@/bin/activate
+	pip install --index-url https://$(INDEX)/simple pynvim
+
+install: npmbullshit
 	nvim +PlugInstall +UpdateRemotePlugins
 
 clean:
-	rm -rf $(HOME)/.nvim/plugged $(HOME)/.local/share/nvim/* $(HOME)/.cache/nvim/* py37
+	rm -rf $(HOME)/.nvim/plugged $(HOME)/.local/share/nvim/* $(HOME)/.cache/nvim/* $(PYTHON)

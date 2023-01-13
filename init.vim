@@ -2,6 +2,7 @@ set nu
 let mapleader=" "
 nnoremap <leader>s :source ~/.config/nvim/init.vim<CR>
 set timeoutlen=2000
+set signcolumn=yes
 
 " Auto-reload changes from disk
 set autoread
@@ -25,7 +26,6 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set nohlsearch incsearch
-syntax enable
 
 " Markdown
 au FileType markdown setlocal textwidth=79
@@ -91,21 +91,20 @@ Plug 'tpope/vim-fugitive'
 Plug 'easymotion/vim-easymotion'
 
 "" Python
-let g:python3_host_prog = '$HOME/.config/nvim/py37/bin/python'
-let g:python_host_prog = '$HOME/.config/nvim/py37/bin/python'
-Plug 'numirias/semshi', { 'for': 'python', 'do': ':UpdateRemotePlugins' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 au FileType python set signcolumn=yes
-au FileType python nnoremap <buffer> <leader>r  :Semshi rename<CR>
-au FileType python nnoremap <buffer> <Tab>      :Semshi goto name next<CR>
-au FileType python nnoremap <buffer> <S-Tab>    :Semshi goto name prev<CR>
-au FileType python nnoremap <buffer> <leader>ge :Semshi goto error<CR>
-au FileType python nnoremap <buffer> <leader>e  :Semshi error<CR>
-""" Override default Semshi highlight to be less distracting
-function CustomSemshiHighlights()
-  hi semshiSelected ctermfg=161 cterm=underline
-endfunction
-au FileType python call CustomSemshiHighlights()
+
+"" Language server???
+Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 
 "" Clojure
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -127,6 +126,83 @@ augroup END
 
 Plug 'scrooloose/syntastic'
 call plug#end()
+
+set completeopt=menu,menuone,noselect
+lua <<EOF
+
+-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- require'lspconfig'.pyright.setup{}
+-- require'lspconfig'.vimls.setup{}
+
+  -- Set up nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      end,
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Set up lspconfig.
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require('lspconfig')['vimls'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['pyright'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['puppet'].setup {
+    capabilities = capabilities
+  }
+EOF
 
 " Trailing whitespace
 highlight ExtraWhitespace ctermbg=red
