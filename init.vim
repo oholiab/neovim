@@ -88,6 +88,7 @@ Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
 
 "" Python
@@ -134,6 +135,11 @@ lua <<EOF
 -- require'lspconfig'.pyright.setup{}
 -- require'lspconfig'.vimls.setup{}
 
+  local opts = { noremap=true, silent=true }
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
   -- Set up nvim-cmp.
   local cmp = require'cmp'
 
@@ -202,10 +208,13 @@ lua <<EOF
   require('lspconfig')['puppet'].setup {
     capabilities = capabilities
   }
+  require'lspconfig'.gopls.setup{}
 EOF
 
 " Trailing whitespace
 highlight ExtraWhitespace ctermbg=red
 match ExtraWhitespace /\s\+$/
+
+nnoremap <leader>r :lua vim.lsp.buf.rename()<CR>
 
 echo "Loaded"
