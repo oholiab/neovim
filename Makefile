@@ -2,7 +2,7 @@ SHELL=/bin/bash
 .ONESHELL:
 INDEX?=pypi.org
 REGISTRY?=https://registry.npmjs.org
-PYTHON?=py310
+PYTHON?=py3
 
 .PHONY: install clean npmbullshit
 default: install
@@ -15,7 +15,7 @@ npmbullshit:
 	npm i -g pyright
 
 $(PYTHON):
-	virtualenv -p python3.10 ./$@
+	virtualenv -p python3 ./$@
 	source $@/bin/activate
 	pip install --index-url https://$(INDEX)/simple pynvim
 
