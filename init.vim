@@ -133,6 +133,7 @@ call plug#end()
 set completeopt=menu,menuone,noselect
 lua require('lsp')
 lua require('iron')
+lua require('complete')
 
 " Trailing whitespace
 highlight ExtraWhitespace ctermbg=red
