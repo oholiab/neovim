@@ -8,7 +8,7 @@ PYTHON?=py3
 default: install
 
 npmbullshit:
-	mkdir "${HOME}/.npm-packages"
+	mkdir -p "${HOME}/.npm-packages"
 	npm config set prefix "${HOME}/.npm-packages"
 	npm config set coc.nvim:registry $(REGISTRY)
 	npm i -g vim-language-server
