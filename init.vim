@@ -67,10 +67,18 @@ nnoremap <leader>gb :Git blame<CR>
 """ Reflow current paragraph
 nnoremap <leader>pr vipgq<CR>
 
+function! ReflowCopy()
+  let @" = substitute(@", '\n', ' ', 'g')
+  let @" = substitute(@", '  ', '\n\n', 'g')
+  call system("pbcopy", getreg('"'))
+endfunction
+
+
 "" Cut and paste
 vnoremap <space> <Nop>
 if has("macunix")
   vnoremap <leader>y y:call system("pbcopy", @")<CR>:echo "Copied"<CR>
+  vnoremap <leader>sy y:call ReflowCopy()<CR>
 elseif has("unix")
   vnoremap <leader>y y:call system("wl-copy", @")<CR>:echo "Copied"<CR>
 endif
@@ -131,6 +139,11 @@ Plug 'scrooloose/syntastic'
 Plug 'savq/melange-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
 Plug 'sirtaj/vim-openscad'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+function OpenMarkdownPreview (url)
+  execute "silent ! open -a Firefox -n --args --new-window " . a:url
+endfunction
+let g:mkdp_browserfunc = 'OpenMarkdownPreview'
 call plug#end()
 
 set termguicolors
