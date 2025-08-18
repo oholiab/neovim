@@ -30,7 +30,7 @@ tnoremap <C-w> <C-\><C-n>
 
 " Markdown
 au FileType markdown setlocal textwidth=79
-au FileType markdown nnoremap <buffer> <leader>d V:s/\[ \]/[*]/<CR>
+au FileType markdown nnoremap <buffer> <leader>d V:s/\[ \]/[x]/<CR>
 au FileType markdown nnoremap <buffer> <leader>o o*<space>[<space>]<space>
 au FileType markdown hi UncheckedTodo ctermbg=yellow
 au FileType markdown syn match UncheckedTodo /\[<space>\]/
@@ -128,12 +128,19 @@ augroup XML
 augroup END
 
 Plug 'scrooloose/syntastic'
+Plug 'savq/melange-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+Plug 'sirtaj/vim-openscad'
 call plug#end()
+
+set termguicolors
+colorscheme melange
 
 set completeopt=menu,menuone,noselect
 lua require('lsp')
 lua require('iron')
 lua require('complete')
+lua require'nvim-treesitter.configs'.setup{highlight={enable=true},ensure_installed={"kdl"}}
 
 " Trailing whitespace
 highlight ExtraWhitespace ctermbg=red
