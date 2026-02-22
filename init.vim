@@ -98,7 +98,10 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 
 "" Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
@@ -106,7 +109,6 @@ Plug 'Vigemus/iron.nvim', { 'for': 'python' }
 au FileType python set signcolumn=yes
 
 "" Language server???
-Plug 'neovim/nvim-lspconfig'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -118,7 +120,19 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
 "" Clojure
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+autocmd BufRead,BufNewFile *.bb setfiletype clojure
+Plug 'liquidz/elin', {'for': 'clojure'}
+let g:elin_enable_default_key_mappings = v:true
+" Plug 'tpope/vim-fireplace'
+Plug 'venantius/vim-cljfmt'
+ autocmd BufRead,BufNewFile *.bb ElinInstantConnect babashka
+" autocmd BufRead,BufNewFile *.clj FireplaceConnect
+"au FileType clojure xmap h [e
+"au FileType clojure xmap l ]e
+"au FileType clojure xmap k [(
+"au FileType clojure xmap j ])
+
+
 
 "" Puppet :(
 Plug 'rodjek/vim-puppet', {'for': 'puppet' }
@@ -130,10 +144,10 @@ Plug 'fatih/vim-go', {'for': 'go', 'do': ':GoUpdateBinaries' }
 Plug 'hashivim/vim-terraform', {'for': 'tf'}
 
 "" XML
-augroup XML
-    autocmd!
-    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
-augroup END
+"augroup XML
+    "autocmd!
+    "autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+"augroup END
 
 Plug 'scrooloose/syntastic'
 Plug 'savq/melange-nvim'
@@ -153,7 +167,7 @@ set completeopt=menu,menuone,noselect
 lua require('lsp')
 lua require('iron')
 lua require('complete')
-lua require'nvim-treesitter.configs'.setup{highlight={enable=true},ensure_installed={"kdl"}}
+" lua require'nvim-treesitter.configs'.setup{highlight={enable=true},ensure_installed={"kdl"}}
 
 " Trailing whitespace
 highlight ExtraWhitespace ctermbg=red
@@ -161,5 +175,7 @@ match ExtraWhitespace /\s\+$/
 
 nnoremap <leader>r :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>h :lua vim.lsp.buf.signature_help()<CR>
+inoremap <CR> <C-G>u<CR>
+
 
 echo "Loaded"

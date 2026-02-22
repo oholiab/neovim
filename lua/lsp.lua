@@ -66,13 +66,13 @@
   -- Set up lspconfig.
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['vimls'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['pyright'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['puppet'].setup {
-    capabilities = capabilities
-  }
-  require'lspconfig'.gopls.setup{}
+  vim.lsp.config('vimls', { capabilities = capabilities })
+  vim.lsp.config('pyright', { capabilities = capabilities })
+  vim.lsp.config('puppet', { capabilities = capabilities })
+  vim.lsp.config('gopls', { capabilities = capabilities })
+  vim.lsp.config('clojure', { capabilities = capabilities , cmd = { '/home/grimmware/bin/clojure-lsp'}})
+  vim.lsp.enable('vimls')
+  vim.lsp.enable('pyright')
+  vim.lsp.enable('puppet')
+  vim.lsp.enable('gopls')
+  vim.lsp.enable('clojure')
